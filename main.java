@@ -7,13 +7,13 @@ public class main{
       String comando = scanner.nextString();
 
       if(comando == "VARS"){
-        string com_vars = Vars(comando);
+        comando com_vars = Vars(comando);
       }
       else if(comando == "RESET"){
-        string com_reset = Reset(comando);
+        comando com_reset = Reset(comando);
       }
       else if(comando == "REC"){
-        string com_rec = Rec(comando);
+        comando com_rec = Rec(comando);
       }
       else if(comando == "STOP"){
         string com_stop = Stop(comando);
@@ -25,7 +25,7 @@ public class main{
         string com_erase = Erase(comando);
       }
       else if(comando == "EXIT"){
-        string com_exit = Exit(comando);
+        comando com_exit = Exit(comando);
       }
       else{
         //Criar exception para comando não existente
