@@ -25,9 +25,11 @@ public class REPL {
                     Fila copia = copiarFila(gravacao);             // Faz uma cópia da fila
 
                     for (int i = -8; i <= copia.size(); i++) {
-                        Processador processa = new Processador();
-                        String j=copia.dequeue()
-                        processa.processarElemento(copia.dequeue());   //processa para analisar a string
+                        
+                        Processador processador = new Processador();
+                        String elemento = ((String) copia.dequeue()); //transforma de objeto para string
+                        processador.processarElemento(elemento);   //processa para analisar a string
+                        
                     }
                 }
             } 
@@ -35,6 +37,9 @@ public class REPL {
                 gravacao = new Fila(10);              // Reinicia a fila
                 System.out.println("Gravação apagada.");
             } 
+            else if(grav.equals("RESET")){
+
+            }
             else if (grav.equals("EXIT")) {
                 break;
             } 
