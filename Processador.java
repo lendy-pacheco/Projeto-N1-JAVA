@@ -2,28 +2,31 @@ public class Processador {
     private String variavelNome;
     private int variavelValor;
 
-    public void processarElemento(Fila elemento) {
-        //  Remover espaços vazios
-        elemento = elemento.trim();
+    public void processarElemento(Object elemento) {
+        if (!(elemento instanceof String)) {
+            System.out.println("Erro: O elemento não é uma String.");
+            return;
+        }
 
-        //  verificar se é uma atribuição de variável (exemplo: x = 10)
-        if (elemento.contains("=")) {
-            atribuirVariavel(elemento);
+        String comando = ((String) elemento).trim(); // Converte Object para String e remove espaços
+
+        // 1️⃣ Verificar se é uma atribuição de variável (exemplo: x = 10)
+        if (comando.contains("=")) {
+            atribuirVariavel(comando);
         } 
-        // 3️⃣ Verificar se é uma palavra reservada
-        else if (isPalavraReservada(elemento)) {
-            System.out.println("Palavra reservada detectada: " + elemento);
+        // 2️⃣ Verificar se é uma palavra reservada
+        else if (isPalavraReservada(comando)) {
+            System.out.println("Palavra reservada detectada: " + comando);
         } 
-        // 4️⃣ Verificar se é uma expressão matemática com variáveis (exemplo: (a+b)*c)
-        else if (isExpressaoMatematica(elemento)) {
-            calcularExpressao(elemento);
+        // 3️⃣ Verificar se é uma expressão matemática com variáveis (exemplo: (a+b)*c)
+        else if (isExpressaoMatematica(comando)) {
+            calcularExpressao(comando);
         } 
         else {
-            System.out.println("Entrada desconhecida: " + elemento);
+            System.out.println("Entrada desconhecida: " + comando);
         }
     }
 
-    // 5️⃣ Verificar se é uma atribuição de variável (exemplo: x = 10)
     private void atribuirVariavel(String expressao) {
         String[] partes = expressao.split("=");
 
@@ -42,10 +45,9 @@ public class Processador {
         }
     }
 
-    // 6️⃣ Verificar se é uma palavra reservada
     private boolean isPalavraReservada(String palavra) {
-        String[] palavrasReservadas = {"PLAY", "ERASE", "REC", "EXIT", "PRINT"};
-        for (String reservada : palavrasReservadas) {
+        String[] palavrasReservadas = {"PLAY", "EXIT", "ERASE", "REC", "VARS","RESET"};
+        for (String reservada : palavrasReservadas) { // ":" =Ele percorrerá todos os elementos de uma Coleção.
             if (palavra.equalsIgnoreCase(reservada)) {
                 return true;
             }
@@ -53,13 +55,11 @@ public class Processador {
         return false;
     }
 
-    // 7️⃣ Verificar se é uma expressão matemática com variáveis (exemplo: (a+b)*c)
     private boolean isExpressaoMatematica(String expressao) {
         return expressao.matches(".*[a-zA-Z]+.*") && expressao.matches(".*[0-9+\\-*/()]+.*");
     }
 
     private void calcularExpressao(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
-        // Aqui você pode implementar um avaliador de expressões matemáticas
     }
 }
