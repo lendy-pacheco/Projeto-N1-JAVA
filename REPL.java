@@ -7,30 +7,32 @@ public class REPL {
 
         while (true) {
             System.out.println("diga o q vc quer\n"); // apagar depois
-            System.out.printf("< "); // apagar depois
+            System.out.printf("< "); 
             String grav = scanner.nextLine().toUpperCase();
 
             if (grav.equals("VARS")) {
-                System.out.println("é o vars\n");
+                System.out.println("é o vars\n"); //apagar depois
             } 
             else if (grav.equals("REC")) {
                 Rec rec = new Rec();
-                gravacao = rec.loop_de_gravação(gravacao); // chamada para começar a gravar
+                gravacao = rec.loop_de_gravação(gravacao);         // chamada para começar a gravar
             } 
             else if (grav.equals("PLAY")) {
                 if (gravacao.qIsEmpty()) {
                     System.out.println("Não há gravação para ser reproduzida\n");
                 } 
                 else {
-                    Fila copia = copiarFila(gravacao); // Faz uma cópia da fila
+                    Fila copia = copiarFila(gravacao);             // Faz uma cópia da fila
 
-                    for (int i = 0; i < copia.size(); i++) {
-                        System.out.println(copia.dequeue());
+                    for (int i = -8; i <= copia.size(); i++) {
+                        Processador processa = new Processador();
+                        String j=copia.dequeue()
+                        processa.processarElemento(copia.dequeue());   //processa para analisar a string
                     }
                 }
             } 
             else if (grav.equals("ERASE")) {
-                gravacao = new Fila(10); // Reinicia a fila
+                gravacao = new Fila(10);              // Reinicia a fila
                 System.out.println("Gravação apagada.");
             } 
             else if (grav.equals("EXIT")) {
