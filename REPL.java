@@ -1,61 +1,64 @@
 import java.util.Scanner;
 
-public class REPL{
-    public void iniciarREPL() { // acesso aos comandos
-        Fila gravacao = new Fila(10); //fila da gravação
+public class REPL {
+    public void iniciarREPL() { // Acesso aos comandos
+        Fila gravacao = new Fila(10); // Fila da gravação
         Scanner scanner = new Scanner(System.in); // Inicializa o Scanner
 
-       while (true){
-        System.out.println("diga o q vc quer\n"); //apagar depois
-        System.out.printf("< "); //apagar depois
-        String grav = scanner.nextLine().toUpperCase();
-        
+        while (true) {
+            System.out.println("diga o q vc quer\n"); // apagar depois
+            System.out.printf("< "); // apagar depois
+            String grav = scanner.nextLine().toUpperCase();
 
+            if (grav.equals("VARS")) {
+                System.out.println("é o vars\n");
+            } 
+            else if (grav.equals("REC")) {
+                Rec rec = new Rec();
+                gravacao = rec.loop_de_gravação(gravacao); // chamada para começar a gravar
+            } 
+            else if (grav.equals("PLAY")) {
+                if (gravacao.qIsEmpty()) {
+                    System.out.println("Não há gravação para ser reproduzida\n");
+                } 
+                else {
+                    Fila copia = copiarFila(gravacao); // Faz uma cópia da fila
 
-        
-        if(grav.equals("VARS")){
-            System.out.println("é o vars\n");
-    
-        }
-        else if (grav.equals("REC")){
-            grav= "reset"; // reseta a variavel grav
-            Rec  rec= new Rec();
-            
-            rec.loop_de_gravação(gravacao);
-                
-
-                
-    
-        }
-        else if(grav.equals("PLAY")){
-            Fila aux = new Fila(10);
-            if(gravacao.qIsEmpty()){
-                System.out.println("Não há gravação para ser reproduzida\n");
+                    for (int i = 0; i < copia.size(); i++) {
+                        System.out.println(copia.dequeue());
+                    }
+                }
+            } 
+            else if (grav.equals("ERASE")) {
+                gravacao = new Fila(10); // Reinicia a fila
+                System.out.println("Gravação apagada.");
+            } 
+            else if (grav.equals("EXIT")) {
+                break;
+            } 
+            else {
+                System.out.println("comando inválido\n");
             }
-            aux = gravacao;
-
-            for (int i=0;i<=aux.size();i++){
-              System.out.println(aux.dequeue());  
-            }
         }
-
-        else if (grav.equals("ERASE")){
-    
-        }
-        else if (grav.equals("EXIT")){
-            break;
-
-        }
-        else{
-            System.out.println("comando inválido\n");
-        }
-    }
-    scanner.close();
+        scanner.close();
     }
 
+    public static Fila copiarFila(Fila original) {
+        Fila copia = new Fila(original.size()); // Nova fila com a mesma capacidade
+        Fila auxiliar = new Fila(original.size()); // Auxiliar para preservar a fila original
     
+        // Copiar elementos mantendo a ordem
+        while (!original.qIsEmpty()) {
+            String elemento = (String) original.dequeue(); // Converte para String
+            copia.enqueue(elemento); // Adiciona na cópia
+            auxiliar.enqueue(elemento); // Adiciona na auxiliar
+        }
     
- 
-
+        // Restaurar a fila original
+        while (!auxiliar.qIsEmpty()) {
+            original.enqueue(auxiliar.dequeue()); // Reinsere os elementos na fila original
+        }
+    
+        return copia; // Retorna a cópia
     }
-
+}
