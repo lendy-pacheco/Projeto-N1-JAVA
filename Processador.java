@@ -1,6 +1,7 @@
+import java.util.HashMap;
+
 public class Processador {
-    private String variavelNome;
-    private int variavelValor;
+    private HashMap<String, Double> variaveis = new HashMap<>(); // Mapeia nomes de variáveis para seus valores
 
     public void processarElemento(Object elemento) {
         if (!(elemento instanceof String)) {
@@ -8,7 +9,7 @@ public class Processador {
             return;
         }
 
-        String comando = ((String) elemento).trim(); // Converte Object para String e remove espaços
+        String comando = ((String) elemento).trim(); // Remove espaços extras
 
         // 1️⃣ Verificar se é uma atribuição de variável (exemplo: x = 10)
         if (comando.contains("=")) {
@@ -31,12 +32,20 @@ public class Processador {
         String[] partes = expressao.split("=");
 
         if (partes.length == 2) {
-            variavelNome = partes[0].trim();
-            String valor = partes[1].trim();
+            String nomeVariavel = partes[0].trim(); // Nome da variável
+            String valor = partes[1].trim(); // Valor da variável
 
             try {
-                variavelValor = Integer.parseInt(valor);
-                System.out.println("Variável atribuída: " + variavelNome + " = " + variavelValor);
+                double valorConvertido;
+                if (valor.contains(".")) { 
+                    valorConvertido = Double.parseDouble(valor); // Converte para double
+                } else {
+                    valorConvertido = Integer.parseInt(valor); // Converte para int, mas armazena como double
+                }
+
+                variaveis.put(nomeVariavel, valorConvertido); // Armazena a variável
+                System.out.println("Variável atribuída: " + nomeVariavel + " = " + valorConvertido);
+
             } catch (NumberFormatException e) {
                 System.out.println("Erro: Valor inválido para variável.");
             }
@@ -46,9 +55,9 @@ public class Processador {
     }
 
     private boolean isPalavraReservada(String palavra) {
-        String[] palavrasReservadas = {"PLAY", "EXIT", "ERASE", "REC", "VARS","RESET"};
-        for (String reservada : palavrasReservadas) { // ":" =Ele percorrerá todos os elementos de uma Coleção.
-            if (palavra.equalsIgnoreCase(reservada)) {
+        String[] palavrasReservadas = {"PLAY", "EXIT", "ERASE", "REC", "VARS", "RESET"};
+        for (String reservada : palavrasReservadas) { // ":" = Ele percorre todos os elementos da coleção.
+            if (palavra.equalsIgnoreCase(reservada)) { // Compara ignorando maiúsculas e minúsculas
                 return true;
             }
         }
@@ -61,5 +70,10 @@ public class Processador {
 
     private void calcularExpressao(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
+        // Aqui você pode implementar um parser para calcular expressões com variáveis armazenadas
+    }
+
+    public void imprimirVariaveis() {
+        System.out.println("Variáveis armazenadas: " + variaveis);
     }
 }
