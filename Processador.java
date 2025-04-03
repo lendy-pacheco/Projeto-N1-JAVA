@@ -1,7 +1,8 @@
-import java.util.HashMap;
-
 public class Processador {
-    private HashMap<String, Double> variaveis = new HashMap<>(); // Mapeia nomes de variáveis para seus valores
+    private static final int MAX_VARS = 100; 
+    private String[] nomesVariaveis = new String[MAX_VARS]; // armazena os nomes das variáveis
+    private double[] valoresVariaveis = new double[MAX_VARS]; // armazena os valores das variáveis
+    private int contadorVariaveis = 0; 
 
     public void processarElemento(Object elemento) {
         if (!(elemento instanceof String)) {
@@ -9,24 +10,19 @@ public class Processador {
             return;
         }
 
-        String comando = ((String) elemento).trim(); // Remove espaços extras
+        String comando = ((String) elemento).trim(); //remove espaços extras
 
-        // 1️⃣ Verificar se é uma atribuição de variável (exemplo: x = 10)
+        // verificar se é uma atribuição de variável
         if (comando.contains("=")) {
             atribuirVariavel(comando);
         } 
-        // 2️⃣ Verificar se é uma palavra reservada
+        // verificar se é uma palavra reservada
         else if (isPalavraReservada(comando)) {
             System.out.println("Palavra reservada detectada: " + comando);
         } 
-        // 3️⃣ Verificar se é uma expressão matemática com variáveis (exemplo: (a+b)*c)
+        // verificar se é uma expressão matemática com variáveis 
         else if (isExpressaoMatematica(comando)) {
             converter(comando);
-            
-            //String expressaoPosfixa = ConversorInfixaPosfixa.converterParaPosfixa(comando);
-            ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
-            String expressaoPosfixa = conversor.converterParaPosfixa(comando);
-            System.out.println(expressaoPosfixa);
         } 
         else {
             System.out.println("Entrada desconhecida: " + comando);
@@ -37,18 +33,18 @@ public class Processador {
         String[] partes = expressao.split("=");
 
         if (partes.length == 2) {
-            String nomeVariavel = partes[0].trim(); // Nome da variável
-            String valor = partes[1].trim(); // Valor da variável
+            String nomeVariavel = partes[0].trim(); // nome da variável
+            String valor = partes[1].trim(); // valor da variável
 
             try {
                 double valorConvertido;
                 if (valor.contains(".")) { 
-                    valorConvertido = Double.parseDouble(valor); // Converte para double
+                    valorConvertido = Double.parseDouble(valor); // converte para double
                 } else {
-                    valorConvertido = Integer.parseInt(valor); // Converte para int, mas armazena como double
+                    valorConvertido = Integer.parseInt(valor); // converte para int, mas armazena como double
                 }
 
-                variaveis.put(nomeVariavel, valorConvertido); // Armazena a variável
+                armazenarVariavel(nomeVariavel, valorConvertido);
                 System.out.println("Variável atribuída: " + nomeVariavel + " = " + valorConvertido);
 
             } catch (NumberFormatException e) {
@@ -59,10 +55,27 @@ public class Processador {
         }
     }
 
+    private void armazenarVariavel(String nome, double valor) {
+        for (int i = 0; i < contadorVariaveis; i++) {
+            if (nomesVariaveis[i].equals(nome)) { // atualiza variável existente
+                valoresVariaveis[i] = valor;
+                return;
+            }
+        }
+        
+        if (contadorVariaveis < MAX_VARS) { // armazena nova variável com array duplo
+            nomesVariaveis[contadorVariaveis] = nome;
+            valoresVariaveis[contadorVariaveis] = valor;
+            contadorVariaveis++;
+        } else {
+            System.out.println("Erro: Limite de variáveis atingido.");
+        }
+    }
+
     private boolean isPalavraReservada(String palavra) {
         String[] palavrasReservadas = {"PLAY", "EXIT", "ERASE", "REC", "VARS", "RESET"};
-        for (String reservada : palavrasReservadas) { // ":" = Ele percorre todos os elementos da coleção.
-            if (palavra.equalsIgnoreCase(reservada)) { // Compara ignorando maiúsculas e minúsculas
+        for (String reservada : palavrasReservadas) { 
+            if (palavra.equalsIgnoreCase(reservada)) { 
                 return true;
             }
         }
@@ -75,11 +88,8 @@ public class Processador {
 
     private void converter(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
-        //String expressaoPosfixa = ConversorInfixaPosfixa.converterParaPosfixa(comando);
-        // Aqui você pode implementar um parser para calcular expressões com variáveis armazenadas
+        // implementação futura para converter expressões matemáticas
     }
 
-    public void imprimirVariaveis() {
-        System.out.println("Variáveis armazenadas: " + variaveis);
-    }
+    
 }
