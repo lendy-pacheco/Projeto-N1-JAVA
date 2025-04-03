@@ -14,8 +14,9 @@ public class Rec {
             System.out.printf("gravando (%d/10)", count);
             System.out.print("< ");
             String grav = scanner.nextLine().toUpperCase(); // Input do usuário para gravar
+            System.out.println(grav);
 
-            if (grav.equals("PLAY") || grav.equals("REC") || grav.equals("ERASE") || grav.equals("EXIT")) {
+            if (grav.equals("PLAY") || grav.equals("REC") || grav.equals("ERASE") || grav.equals("EXIT")||grav.equals("EXPRESSAO MATEMATICA INFIXA")) {
                 System.out.println("Erro: comando inválido para gravação.");
             }
             else if (grav.equals("STOP")) { // Parar gravação
@@ -35,5 +36,6 @@ public class Rec {
 
         //  NÃO FECHAR O SCANNER AQUI! O REPL ainda precisa usá-lo.
         return gravacao; // Retorna a fila gravada
+    
     }
-}
+} 
