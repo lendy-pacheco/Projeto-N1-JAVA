@@ -1,9 +1,10 @@
 public class PilhaInfixaPosfixa {
-    private int tamanho = 100;
+    private int tamanho;
     private int topoPilha;
     private char[] e;
 
     public PilhaInfixaPosfixa(int tamanho) {
+        this.tamanho = tamanho
         this.e = new char[tamanho];
         this.topoPilha = -1;
     }

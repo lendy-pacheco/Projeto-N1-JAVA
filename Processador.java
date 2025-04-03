@@ -26,6 +26,7 @@ public class Processador {
             //String expressaoPosfixa = ConversorInfixaPosfixa.converterParaPosfixa(comando);
             ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
             String expressaoPosfixa = conversor.converterParaPosfixa(comando);
+            System.out.println(expressaoPosfixa);
         } 
         else {
             System.out.println("Entrada desconhecida: " + comando);

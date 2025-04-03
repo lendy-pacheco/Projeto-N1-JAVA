@@ -41,13 +41,14 @@ public class REPL {
 
             }
             else if (grav.equals("EXIT")) {
-                break;
+                scanner.close();
+                //break;
             } 
             else {
                 System.out.println("comando inválido\n");
             }
         }
-        scanner.close();
+        //scanner.close();
     }
 
     public static Fila copiarFila(Fila original) {
