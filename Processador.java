@@ -21,7 +21,11 @@ public class Processador {
         } 
         // 3️⃣ Verificar se é uma expressão matemática com variáveis (exemplo: (a+b)*c)
         else if (isExpressaoMatematica(comando)) {
-            calcularExpressao(comando);
+            converter(comando);
+            
+            //String expressaoPosfixa = ConversorInfixaPosfixa.converterParaPosfixa(comando);
+            ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
+            String expressaoPosfixa = conversor.converterParaPosfixa(comando);
         } 
         else {
             System.out.println("Entrada desconhecida: " + comando);
@@ -68,8 +72,9 @@ public class Processador {
         return expressao.matches(".*[a-zA-Z]+.*") && expressao.matches(".*[0-9+\\-*/()]+.*");
     }
 
-    private void calcularExpressao(String expressao) {
+    private void converter(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
+        //String expressaoPosfixa = ConversorInfixaPosfixa.converterParaPosfixa(comando);
         // Aqui você pode implementar um parser para calcular expressões com variáveis armazenadas
     }
 
