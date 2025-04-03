@@ -23,7 +23,7 @@ public class Rec {
                 break;
             }
             else if (grav.equals("VARS")|| grav.equals("RESET") || grav.equals("EXIT")){
-                gravacao.enqueue(grav)
+                gravacao.enqueue(grav);
             }
             else {
                 count++;
