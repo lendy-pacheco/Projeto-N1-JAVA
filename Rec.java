@@ -22,6 +22,9 @@ public class Rec {
                 gravacao.enqueue(grav);
                 break;
             }
+            else if (grav.equals("VARS")|| grav.equals("RESET") || grav.equals("EXIT")){
+
+            }
             else {
                 count++;
                 gravacao.enqueue(grav); // Coloca os comandos na fila de gravação
