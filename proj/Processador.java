@@ -91,7 +91,6 @@ public class Processador {
     }
 
     private void converter(String expressao) {
-        System.out.println("Expressão matemática detectada: " + expressao);
         ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
         String saida = conversor.converterParaPosfixa(expressao, valoresVariaveis, nomesVariaveis); // faz a conversao
         System.out.println(saida);

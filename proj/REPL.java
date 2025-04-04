@@ -9,6 +9,7 @@ public class REPL {
     public void iniciarREPL() { // Acesso aos comandos
         Fila gravacao = new Fila(10); // Fila da gravação
         Scanner scanner = new Scanner(System.in); // Inicializa o Scanner
+        Processador proc = new Processador();
         System.out.println("Digite um comando:\n");
         
 
@@ -51,6 +52,8 @@ public class REPL {
                 break; // Agora o loop será interrompido corretamente
             } 
             else if (grav.matches("^[A-Z]\\s*=\\s*-?\\d+(\\.\\d+)?$")) { // Verifica se é uma atribuição de variável ou operador
+                proc.processarElemento(grav);
+                
                 definirVariavel(grav);
             } 
             else if (grav.equals("EXPRESSAO MATEMATICA INFIXA")) {
@@ -72,8 +75,13 @@ public class REPL {
                 String resultado = CONV.converterParaPosfixa(expressao, valores, nomes);
                 System.out.println(resultado);
             }
+            else if(grav.contains("*")||(grav.contains("-"))||grav.contains("/")||grav.contains("+")){
+                
+                proc.processarElemento(grav);
+
+            }
             else{
-                System.err.println("ERRO: comando inválido!!/n");
+                System.out.println("ERRO: comando inválido!!\n");
             }
         }
     }
