@@ -31,13 +31,13 @@ public class REPL {
                     Fila copia = copiarFila(gravacao); // Faz uma cópia da fila
                     Fila aux = copiarFila(copia); // Fila auxiliar para o laço
 
-                    for (int i = 0; i < aux.size(); i++) { // Evita acessar índice fora do limite
-                        Processador processador = new Processador();
-                        String elemento = (String) copia.dequeue(); // Converte para string
-                        processador.processarElemento(elemento); // Processa a string
+                    Processador processador = new Processador(); // Cria UMA instância para manter estado
+                    while (!copia.qIsEmpty()) {
+                        String elemento = (String) copia.dequeue();
+                        processador.processarElemento(elemento);
                     }
                 }
-            } 
+            }
             else if (grav.equals("RESET")) {
                 resetarVariaveis(); // Método para resetar as variáveis corretamente
             } 
