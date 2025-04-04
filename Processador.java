@@ -83,11 +83,14 @@ public class Processador {
     }
 
     private boolean isExpressaoMatematica(String expressao) {
-        return expressao.matches(".*[a-zA-Z]+.*") && expressao.matches(".*[0-9+\\-*/()]+.*");
+        return expressao.matches(".[a-zA-Z]+.") && expressao.matches(".[0-9+\\-/()]+.*");
     }
 
     private void converter(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
+        ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
+        String saida = conversor.converterParaPosfixa(expressao);
+        System.out.println(saida);
         // implementação futura para converter expressões matemáticas
     }
 
