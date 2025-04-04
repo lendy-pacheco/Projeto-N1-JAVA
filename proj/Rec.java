@@ -7,8 +7,8 @@ public class Rec {
         Scanner scanner = new Scanner(System.in); // Criando o objeto Scanner não pode fecha-lo
         int count = 1; // Contador para gravação
 
-        if (gravacao.qIsFull()){ //limpa caso queira gravar e novo
-            while (!gravacao.qIsEmpty()) gravacao.dequeue();
+        if (!gravacao.qIsEmpty()){ //limpa caso queira gravar e novo
+             System.out.println("Esvazie a Gravação antes de gravar outra!!\n");
         }
 
         while (!gravacao.qIsFull()) { // Empilha as entradas
@@ -21,7 +21,6 @@ public class Rec {
                 System.out.println("Erro: comando inválido para gravação.");
             }
             else if (grav.equals("STOP")) { // Parar gravação
-                gravacao.enqueue(grav);
                 break;
             }
             else if (grav.equals("VARS")|| grav.equals("RESET") || grav.equals("EXIT")){
