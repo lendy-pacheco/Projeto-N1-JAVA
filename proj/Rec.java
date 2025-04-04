@@ -9,6 +9,7 @@ public class Rec {
 
         if (!gravacao.qIsEmpty()){ //limpa caso queira gravar e novo
              System.out.println("Esvazie a Gravação antes de gravar outra!!\n");
+             return gravacao;
         }
 
         while (!gravacao.qIsFull()) { // Empilha as entradas
