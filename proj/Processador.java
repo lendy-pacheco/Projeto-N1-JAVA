@@ -15,7 +15,7 @@ public class Processador {
         String comando = ((String) elemento).trim();
 
         if (comando.contains("=")) {
-            atribuirVariavel(comando);
+            atribuirVariavel(comando); // atribui valor a uma variavel
         } else if (isPalavraReservada(comando)) {
             if (comando.equals("VARS")) {
                 System.out.println("Variáveis definidas:");
@@ -26,7 +26,7 @@ public class Processador {
                 }
             }
         } else if (isExpressaoMatematica(comando)) {
-            converter(comando);
+            converter(comando); // trata uma expressao matematica
         } else {
             System.out.println("Entrada desconhecida: " + comando);
         }
@@ -42,12 +42,12 @@ public class Processador {
             try {
                 double valorConvertido;
                 if (valor.contains(".")) {
-                    valorConvertido = Double.parseDouble(valor);
+                    valorConvertido = Double.parseDouble(valor); // converte para double
                 } else {
-                    valorConvertido = Integer.parseInt(valor);
+                    valorConvertido = Integer.parseInt(valor); // converte para inteiro
                 }
 
-                armazenarVariavel(nomeVariavel, valorConvertido);
+                armazenarVariavel(nomeVariavel, valorConvertido); // salva a variavel
                 System.out.println("Variável atribuída: " + nomeVariavel + " = " + valorConvertido);
 
             } catch (NumberFormatException e) {
@@ -61,7 +61,7 @@ public class Processador {
     private void armazenarVariavel(String nome, double valor) {
         for (int i = 0; i < contadorVariaveis; i++) {
             if (nomesVariaveis[i].equals(nome)) {
-                valoresVariaveis[i] = valor;
+                valoresVariaveis[i] = valor; // atualiza valor existente
                 return;
             }
         }
@@ -69,7 +69,7 @@ public class Processador {
         if (contadorVariaveis < MAX_VARS) {
             nomesVariaveis[contadorVariaveis] = nome;
             valoresVariaveis[contadorVariaveis] = valor;
-            contadorVariaveis++;
+            contadorVariaveis++; // adiciona nova variavel
         } else {
             System.out.println("Erro: limite de variáveis atingido.");
         }
@@ -80,20 +80,20 @@ public class Processador {
         
         for (String reservada : palavrasReservadas) {
             if (palavra.equalsIgnoreCase(reservada)) {
-                return true;
+                return true; // verifica se e uma palavra reservada
             }
         }
         return false;
     }
 
     private boolean isExpressaoMatematica(String expressao) {
-        return expressao.matches(".*[a-zA-Z0-9+\\-*/()]+.*");
+        return expressao.matches(".*[a-zA-Z0-9+\\-*/()]+.*"); // verifica padrao de expressao
     }
 
     private void converter(String expressao) {
         System.out.println("Expressão matemática detectada: " + expressao);
         ConversorInfixaPosfixa conversor = new ConversorInfixaPosfixa();
-        String saida = conversor.converterParaPosfixa(expressao, valoresVariaveis, nomesVariaveis);
+        String saida = conversor.converterParaPosfixa(expressao, valoresVariaveis, nomesVariaveis); // faz a conversao
         System.out.println(saida);
     }
 }
