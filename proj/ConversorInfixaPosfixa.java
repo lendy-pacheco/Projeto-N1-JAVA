@@ -137,7 +137,12 @@ public class ConversorInfixaPosfixa {
                         case "+": res = a + b; break;
                         case "-": res = a - b; break;
                         case "*": res = a * b; break;
-                        case "/": res = b != 0 ? a / b : Double.NaN; break;
+                        case "/": 
+                        if (b == 0) {
+                            throw new ArithmeticException("Erro: divisão por zero.");
+                         }
+                          res = a / b;
+                          break;
                         case "^": res = Math.pow(a, b); break;
                     }
 
