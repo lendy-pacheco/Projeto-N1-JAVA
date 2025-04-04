@@ -21,6 +21,7 @@ public class Processador {
         // verifica se e uma palavra reservada
         else if (isPalavraReservada(comando)) {
             System.out.println("palavra reservada detectada: " + comando);
+            REPL.voltaREC(comando);
         } 
         // verifica se e uma expressao matematica com variaveis
         else if (isExpressaoMatematica(comando)) {

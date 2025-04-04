@@ -1,5 +1,8 @@
 package proj;
+
 public class ConversorInfixaPosfixa {
+
+    // retorna o nivel de precedencia de cada operador
     private int precedencia(char operador) {
         if (operador == '+' || operador == '-') return 1;
         if (operador == '*' || operador == '/') return 2;
@@ -7,30 +10,33 @@ public class ConversorInfixaPosfixa {
         return -1;
     }
 
+    // verifica se os parenteses da expressao estao balanceados
     public boolean verificarParenteses(String expressao) {
         int contador = 0;
         for (char caractere : expressao.toCharArray()) {
             if (caractere == '(') contador++;
             else if (caractere == ')') {
                 contador--;
-                if (contador < 0) return false;
+                if (contador < 0) return false; // fecha antes de abrir
             }
         }
-        return contador == 0;
+        return contador == 0; // true se todos os parenteses forem fechados corretamente
     }
 
+    // busca o valor de uma variavel entre os nomes fornecidos
     private double obterValorVariavel(String nome, String[] nomes, double[] valores) throws Exception {
         for (int i = 0; i < nomes.length; i++) {
             if (nomes[i] != null && nomes[i].equalsIgnoreCase(nome)) {
                 return valores[i];
             }
         }
-        throw new Exception("Variável não definida: " + nome);
+        throw new Exception("variavel nao definida: " + nome);
     }
 
+    // metodo principal que converte a expressao infixa para posfixa
     public String converterParaPosfixa(String expressao, double[] valores, String[] nomes) {
         if (!verificarParenteses(expressao)) {
-            return "Erro: Parênteses não balanceados";
+            return "erro: parenteses nao balanceados";
         }
 
         PilhaUniversal pilhaOperadores = new PilhaUniversal(expressao.length());
@@ -40,52 +46,72 @@ public class ConversorInfixaPosfixa {
             for (int i = 0; i < expressao.length(); i++) {
                 char caractere = expressao.charAt(i);
 
-                if (caractere == ' ') continue;
+                if (caractere == ' ') continue; // ignora espacos
 
+                // se for letra, busca o valor da variavel e adiciona na saida
                 if (Character.isLetter(caractere)) {
                     double valor = obterValorVariavel(String.valueOf(caractere), nomes, valores);
                     saida.append(valor).append(" ");
-                } else if (Character.isDigit(caractere)) {
+                }
+
+                // se for digito, monta o numero completo e adiciona na saida
+                else if (Character.isDigit(caractere)) {
                     StringBuilder numero = new StringBuilder();
                     while (i < expressao.length() && 
                           (Character.isDigit(expressao.charAt(i)) || expressao.charAt(i) == '.')) {
                         numero.append(expressao.charAt(i++));
                     }
-                    i--;
+                    i--; // volta um caractere
                     saida.append(numero).append(" ");
-                } else if (caractere == '(') {
+                }
+
+                // se for abre parenteses, empilha
+                else if (caractere == '(') {
                     pilhaOperadores.push(caractere);
-                } else if (caractere == ')') {
+                }
+
+                // se for fecha parenteses, desempilha ate abrir
+                else if (caractere == ')') {
                     while (!pilhaOperadores.isEmptyChar() && pilhaOperadores.topoChar() != '(') {
                         saida.append(pilhaOperadores.popChar()).append(" ");
                     }
-                    if (!pilhaOperadores.isEmptyChar() && pilhaOperadores.topoChar() == '(') pilhaOperadores.popChar();
-                } else if (precedencia(caractere) > 0) {
-                    while (!pilhaOperadores.isEmptyChar() && precedencia(pilhaOperadores.topoChar()) >= precedencia(caractere)) {
+                    if (!pilhaOperadores.isEmptyChar() && pilhaOperadores.topoChar() == '(')
+                        pilhaOperadores.popChar(); // remove o '('
+                }
+
+                // se for operador, desempilha operadores de maior ou igual precedencia
+                else if (precedencia(caractere) > 0) {
+                    while (!pilhaOperadores.isEmptyChar() && 
+                           precedencia(pilhaOperadores.topoChar()) >= precedencia(caractere)) {
                         saida.append(pilhaOperadores.popChar()).append(" ");
                     }
                     pilhaOperadores.push(caractere);
-                } else {
-                    return "Erro: Caractere inválido na expressão: " + caractere;
+                }
+
+                // caractere nao reconhecido
+                else {
+                    return "erro: caractere invalido na expressao: " + caractere;
                 }
             }
 
+            // esvazia o restante da pilha de operadores
             while (!pilhaOperadores.isEmptyChar()) {
                 saida.append(pilhaOperadores.popChar()).append(" ");
             }
 
-            // Avaliação da pós-fixa
+            // agora avalia a expressao posfixa
             String[] tokens = saida.toString().trim().split(" ");
             PilhaUniversal pilhaNumeros = new PilhaUniversal(tokens.length);
 
             for (String token : tokens) {
                 if (token.matches("-?\\d+(\\.\\d+)?")) {
-                    pilhaNumeros.push(Double.parseDouble(token));
+                    pilhaNumeros.push(Double.parseDouble(token)); // empilha numeros
                 } else if (token.matches("[+\\-*/^]")) {
                     double b = pilhaNumeros.popDouble();
                     double a = pilhaNumeros.popDouble();
                     double res = 0;
 
+                    // aplica a operacao de acordo com o operador
                     switch (token) {
                         case "+": res = a + b; break;
                         case "-": res = a - b; break;
@@ -93,15 +119,16 @@ public class ConversorInfixaPosfixa {
                         case "/": res = b != 0 ? a / b : Double.NaN; break;
                         case "^": res = Math.pow(a, b); break;
                     }
-                    pilhaNumeros.push(res);
+
+                    pilhaNumeros.push(res); // empilha o resultado
                 }
             }
 
             double resultadoFinal = pilhaNumeros.popDouble();
-            return saida.toString().trim() + "\nResultado: " + resultadoFinal;
+            return saida.toString().trim() + "\nresultado: " + resultadoFinal;
 
         } catch (Exception e) {
-            return "Erro na conversão: " + e.getMessage();
+            return "erro na conversao: " + e.getMessage();
         }
     }
 }

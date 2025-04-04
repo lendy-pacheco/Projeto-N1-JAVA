@@ -93,9 +93,13 @@ public class REPL {
         return copia; 
     }
 
-    public static void voltaREC(String comando) { 
-        grav = comando; // Atualiza a variável global sem criar um novo objeto
-        new REPL().iniciarREPL(); // Inicia a REPL novamente
+    public void voltaREC(String comando) { 
+        if (comando.equals("VARS")) {
+            new REPL().imprimirVariaveis(); //  Chama o método de uma instância
+        } else {
+            grav = comando;
+            new REPL().iniciarREPL();
+        }
     }
 
     private void definirVariavel(String input) { // Define variável A-Z com um valor numérico

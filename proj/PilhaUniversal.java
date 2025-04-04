@@ -29,7 +29,7 @@ public class PilhaUniversal {
         return topoChar == -1;
     }
 
-    // 🔹 Métodos para DOUBLE (valores)
+    //  Métodos para DOUBLE (valores)
     public void push(double d) {
         dadosDouble[++topoDouble] = d;
     }
