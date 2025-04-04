@@ -1,0 +1,51 @@
+389e391 - Victor Reis, 2025-04-04 : final parte 3
+2765db2 - Victor Reis, 2025-04-04 : final parte 2
+35ed932 - Victor Reis, 2025-04-04 : final verdaadeiro
+5d3aff5 - Victor Reis, 2025-04-04 : processacor comentado
+c60aaba - Victor Reis, 2025-04-04 : final
+9854243 - Victor Reis, 2025-04-04 : pronto
+91ba672 - Victor Reis, 2025-04-04 : pronto mas imperfeito
+bc2319b - Victor Reis, 2025-04-04 : talvez pronto2
+8d74bde - Victor Reis, 2025-04-04 : talvez pronto
+2c56541 - Victor Reis, 2025-04-04 : quase pronto
+3c0a05e - Victor Reis, 2025-04-04 : posfixa lendy
+ec56d18 - Victor Reis, 2025-04-04 : posfixa lendy
+426d380 - Victor Reis, 2025-04-04 : posfixa lendy
+e323ca5 - Victor Reis, 2025-04-04 : codigo da lendy
+29c600c - Victor Reis, 2025-04-04 : codigo da lendy
+c8f125a - Victor Reis, 2025-04-03 : espressao
+0f257cb - Victor Reis, 2025-04-03 : esqueci
+cb6fb5d - Victor Reis, 2025-04-03 : conexao para outras abas
+f622f25 - Victor Reis, 2025-04-03 : ;
+2449d36 - Victor Reis, 2025-04-03 : palavras conhecidas
+650e53c - Victor Reis, 2025-04-03 : eai
+87d7002 - Victor Reis, 2025-04-03 : processador refeito em o hashmap ;(
+87aea05 - lendy-pacheco, 2025-04-03 : Alterando codigo InfixaPosfixa
+213cbd9 - lendy-pacheco, 2025-04-03 : Implementando InfixaPosfixa
+cc45447 - Victor Reis, 2025-04-02 : Update Processador.java
+815edf7 - Victor Reis, 2025-04-02 : Update Processador.java
+8a13758 - Victor Reis, 2025-04-02 : Update REPL.java
+d41c65b - Victor Reis, 2025-04-02 : Update REPL.java
+648ac28 - Victor Reis, 2025-04-02 : Create Processador.java
+45a2543 - Victor Reis, 2025-04-02 : Update Rec.java
+596bea4 - Victor Reis, 2025-04-02 : Update REPL.java
+b5219b6 - Victor Reis, 2025-04-02 : Update Rec.java
+7e1fa56 - Victor Reis, 2025-04-02 : Create tratamento_imput.java
+0fdd361 - Victor Reis, 2025-04-02 : Create REPL.java
+7e6be83 - Victor Reis, 2025-04-02 : Create Rec.java
+65c1a55 - Victor Reis, 2025-04-02 : Create main.java
+22c70f1 - Victor Reis, 2025-04-02 : Create Fila.java
+abfcf75 - Victor Reis, 2025-04-02 : Delete transformar.java
+666f689 - Victor Reis, 2025-04-02 : Delete Main.java
+a32abff - Victor Reis, 2025-04-02 : Delete main.java
+bbd42d3 - Victor Reis, 2025-04-02 : Delete comandos.java
+ffcdad5 - Victor Reis, 2025-04-02 : Delete Rec.java
+0f61c00 - Victor Reis, 2025-03-31 : Update main.java
+8147665 - Victor Reis, 2025-03-31 : Update comandos.java
+5801a56 - Victor Reis, 2025-03-31 : Create pilha.java
+6b41371 - Victor Reis, 2025-03-31 : Create Rec.java
+9ca17c3 - Victor Reis, 2025-03-31 : Create transformar.java
+92e9223 - Victor Reis, 2025-03-31 : Create comandos.java
+53407b8 - Victor Reis, 2025-03-31 : Create main.java
+7ef57c7 - lendy-pacheco, 2025-03-31 : Main criado
+06f1c96 - lendy-pacheco, 2025-03-31 : Initial commit
