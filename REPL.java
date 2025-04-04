@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class REPL {
-    private int[] variaveis = new int[26]; // Para armazenar valores das variáveis A-Z
+    private double[] variaveis = new double[26]; // Para armazenar valores das variáveis A-Z
     private boolean[] variaveisDefinidas = new boolean[26]; // Controle de variáveis definidas
     private static String grav;
 
@@ -51,16 +51,24 @@ public class REPL {
             else if (grav.matches("^[A-Z]=\\d+(\\.\\d+)?$")) { // Verifica se é uma atribuição de variável (ex: A=10 ou B=2.5)
                 definirVariavel(grav);
             } 
-            else if (grav.equals("ESPRESSAO MATEMATICA INFIXA")){
+            else if (grav.equals("EXPRESSAO MATEMATICA INFIXA")) {
                 System.out.println("Insira a expressão \n<");
                 String expressao = scanner.nextLine().toUpperCase();
-
+            
                 ConversorInfixaPosfixa CONV = new ConversorInfixaPosfixa();
-                CONV.converterParaPosfixa(expressao);
-
-            }
-            else {
-                System.out.println("Comando inválido\n");
+            
+                // Criar vetores compatíveis com o conversor
+                String[] nomes = new String[26];
+                double[] valores = new double[26];
+            
+                for (int i = 0; i < 26; i++) {
+                    nomes[i] = String.valueOf((char) ('A' + i)); // A, B, C...
+                    valores[i] = variaveisDefinidas[i] ? variaveis[i] : Double.NaN; // usa NaN se não estiver definida
+                }
+            
+                // Agora passa para o conversor
+                String resultado = CONV.converterParaPosfixa(expressao, valores, nomes);
+                System.out.println(resultado);
             }
         }
     }
