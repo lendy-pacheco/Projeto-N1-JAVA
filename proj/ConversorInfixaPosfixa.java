@@ -20,11 +20,11 @@ public class ConversorInfixaPosfixa {
                 if (contador < 0) return false; // fecha antes de abrir
             }
         }
-        return contador == 0; // true se todos os parenteses forem fechados corretamente
+        return contador == 0;    // true se todos os parenteses forem fechados corretamente
     }
 
     // busca o valor de uma variavel entre os nomes fornecidos
-    private double obterValorVariavel(String nome, String[] nomes, double[] valores) throws Exception {
+    /*private double obterValorVariavel(String nome, String[] nomes, double[] valores) throws Exception {
         for (int i = 0; i < nomes.length; i++) {
             if (nomes[i] != null && nomes[i].equalsIgnoreCase(nome)) {
                 return valores[i];
@@ -32,7 +32,21 @@ public class ConversorInfixaPosfixa {
             
         }
         throw new Exception("variavel nao definida: " + nome);
+    }*/
+
+    private double obterValorVariavel(String nome, String[] nomes, double[] valores) throws Exception {
+        nome = nome.toUpperCase(); // Converte para maiúscula antes de buscar
+        for (int i = 0; i < nomes.length; i++) {
+            if (nomes[i] != null && nomes[i].equals(nome)) { // Verifica sem `equalsIgnoreCase()`
+                if (Double.isNaN(valores[i])) { // Se o valor for NaN, considera não definido
+                    throw new Exception("Variável '" + nome + "' não foi definida.");
+                }
+                return valores[i]; 
+            }
+        }
+        throw new Exception("Variável '" + nome + "' não foi definida.");
     }
+    
 
     // metodo principal que converte a expressao infixa para posfixa
     public String converterParaPosfixa(String expressao, double[] valores, String[] nomes) {

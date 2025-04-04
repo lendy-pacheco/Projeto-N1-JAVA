@@ -15,7 +15,7 @@ public class REPL {
         while (true) {
             
             System.out.printf("< ");
-            grav = scanner.nextLine().toUpperCase(); // Usa a variável de instância correta
+            grav = scanner.nextLine().toUpperCase().trim(); // Usa a variável de instância correta
 
             if (grav.equals("VARS")) {
                 imprimirVariaveis(); // Método para exibir as variáveis definidas
@@ -50,7 +50,7 @@ public class REPL {
                 scanner.close();
                 break; // Agora o loop será interrompido corretamente
             } 
-            else if (grav.matches("^[A-Z]=\\d+(\\.\\d+)?$")) { // Verifica se é uma atribuição de variável (ex: A=10 ou B=2.5)
+            else if (grav.matches("^[A-Z]\\s*=\\s*-?\\d+(\\.\\d+)?$")) { // Verifica se é uma atribuição de variável ou operador
                 definirVariavel(grav);
             } 
             else if (grav.equals("EXPRESSAO MATEMATICA INFIXA")) {
@@ -65,7 +65,7 @@ public class REPL {
             
                 for (int i = 0; i < 26; i++) {
                     nomes[i] = String.valueOf((char) ('A' + i)); // A, B, C...
-                    valores[i] = variaveisDefinidas[i] ? variaveis[i] : Double.NaN; // usa NaN se não estiver definida
+                    valores[i] = variaveisDefinidas[i] ? variaveis[i] : Double.NaN; // se valor ja tiver variavel definida atribui um doble.nan.(não é um numero);
                 }
             
                 // Agora passa para o conversor
@@ -116,7 +116,8 @@ public class REPL {
 
         String valorString = input.split("=")[1].trim(); // Obtém o valor após '='
         try {
-            int valor = Integer.parseInt(valorString); // Converte para inteiro
+            //int valor = Integer.parseInt(valorString); // Converte para inteiro
+            double valor = Double.parseDouble(valorString);
             int index = variavel - 'A'; // Obtém índice correspondente (A=0, B=1, ..., Z=25)
             variaveis[index] = valor;
             variaveisDefinidas[index] = true;
