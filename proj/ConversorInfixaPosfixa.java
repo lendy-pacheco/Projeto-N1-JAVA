@@ -99,14 +99,20 @@ public class ConversorInfixaPosfixa {
                 saida.append(pilhaOperadores.popChar()).append(" ");
             }
 
-            // agora avalia a expressao posfixa
+            // divide a expressao posfixa em tokens separados por espaco
             String[] tokens = saida.toString().trim().split(" ");
             PilhaUniversal pilhaNumeros = new PilhaUniversal(tokens.length);
+            // cria uma pilha para armazenar os numeros durante a avaliacao
 
+            // percorre cada token da expressao posfixa
             for (String token : tokens) {
+                // se o token for um numero (inteiro ou decimal), empilha
                 if (token.matches("-?\\d+(\\.\\d+)?")) {
                     pilhaNumeros.push(Double.parseDouble(token)); // empilha numeros
+                
+                // se o token for um operador (+, -, *, /, ^)
                 } else if (token.matches("[+\\-*/^]")) {
+                    // desempilha os dois ultimos numeros
                     double b = pilhaNumeros.popDouble();
                     double a = pilhaNumeros.popDouble();
                     double res = 0;
