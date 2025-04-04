@@ -1,95 +1,77 @@
 public class ConversorInfixaPosfixa {
-    // Define a precedência dos operadores
     private int precedencia(char operador) {
-        if (operador == '+' || operador == '-') {
-            return 1;
-        } else if (operador == '*' || operador == '/') {
-            return 2;
-        } else if (operador == '^') {
-            return 3;
-        } else {
-            // Retornar -1 quando não for operador
-            return -1;
-        }
+        if (operador == '+' || operador == '-') return 1;
+        if (operador == '*' || operador == '/') return 2;
+        if (operador == '^') return 3;
+        return -1;
     }
 
     public boolean verificarParenteses(String expressao) {
-        int contador = 0; // Conta os parênteses abertos
-    
+        int contador = 0;
         for (char caractere : expressao.toCharArray()) {
-            if (caractere == '(') {
-                contador++; // Abriu um parêntese
-            } else if (caractere == ')') {
-                contador--; // Fechou um parêntese
-                if (contador < 0) {
-                    return false; // Fechou mais do que abriu
-                }
+            if (caractere == '(') contador++;
+            else if (caractere == ')') {
+                contador--;
+                if (contador < 0) return false;
             }
         }
-    
-        return contador == 0; // Se for 0, está balanceado, senão está errado
+        return contador == 0;
     }
 
-    // Método que converte uma expressão infixa para posfixa
-    public String converterParaPosfixa(String expressao) {
-        if(!verificarParenteses(expressao)){
-            return "Erro: Parenteses não balanceados";
+    private double obterValorVariavel(String nome, String[] nomes, double[] valores) throws Exception {
+        for (int i = 0; i < nomes.length; i++) {
+            if (nomes[i] != null && nomes[i].equals(nome)) {
+                return valores[i];
+            }
         }
+        throw new Exception("Variável não definida: " + nome);
+    }
 
+    public String converterParaPosfixa(String expressao, double[] valores, String[] nomes) {
+        if (!verificarParenteses(expressao)) {
+            return "Erro: Parênteses não balanceados";
+        }
+        
         PilhaInfixaPosfixa pilha = new PilhaInfixaPosfixa(expressao.length());
         String saida = "";
-
-        try{
+        
+        try {
             for (int i = 0; i < expressao.length(); i++) {
                 char caractere = expressao.charAt(i);
-
-                // Ignorar espaços em branco
-                if (caractere == ' ') {
-                    continue;
-                }
-
-                // Se o caractere for uma variável (assumindo TratamentoDeString.ehLetraMaiuscula existe e funciona)
-                if (TratamentoDeString.ehLetraMaiuscula(caractere)) {
-                    saida += caractere;
-                }
-                // Se o caractere for um '(', empilha
-                else if (caractere == '(') {
+                
+                if (caractere == ' ') continue;
+                
+                if (Character.isLetter(caractere)) {
+                    try {
+                        double valor = obterValorVariavel(String.valueOf(caractere), nomes, valores);
+                        saida += valor + " ";
+                    } catch (Exception e) {
+                        return "Erro na conversão: " + e.getMessage();
+                    }
+                } else if (caractere == '(') {
                     pilha.push(caractere);
-                }
-                // Se o caractere for um ')', desempilha até encontrar '('
-                else if (caractere == ')') {
+                } else if (caractere == ')') {
                     while (!pilha.isEmpty() && pilha.topo() != '(') {
-                        saida += pilha.pop();
+                        saida += pilha.pop() + " ";
                     }
-                    if (!pilha.isEmpty() && pilha.topo() == '(') {
-                        pilha.pop(); // Remove o '(' da pilha
-                    } 
-                }            
-                // Se for um operador
-                else if (precedencia(caractere) > 0) {
-                    // 1. Enquanto a pilha não estiver vazia e houver no seu topo um operador com prioridade maior ou igual ao encontrado
+                    if (!pilha.isEmpty() && pilha.topo() == '(') pilha.pop();
+                } else if (precedencia(caractere) > 0) {
                     while (!pilha.isEmpty() && precedencia(pilha.topo()) >= precedencia(caractere)) {
-                        // Desempilhe o operador e copie-o na saída
-                        saida += pilha.pop();
+                        saida += pilha.pop() + " ";
                     }
-                    // 2. Empilhe o operador encontrado
                     pilha.push(caractere);
-                }
-                else {
-                    // Caractere desconhecido
+                } else {
                     return "Erro: Caractere inválido na expressão: " + caractere;
                 }
             }
-
-            // Desempilha o que restou na pilha
-        
+            
             while (!pilha.isEmpty()) {
-                saida += pilha.pop();
+                saida += pilha.pop() + " ";
             }
-    
         } catch (Exception e) {
             return "Erro na conversão: " + e.getMessage();
         }
-        return saida;
-    }   
+        
+        return saida.trim();
+    }
 }
