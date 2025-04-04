@@ -29,6 +29,7 @@ public class ConversorInfixaPosfixa {
             if (nomes[i] != null && nomes[i].equalsIgnoreCase(nome)) {
                 return valores[i];
             }
+            
         }
         throw new Exception("variavel nao definida: " + nome);
     }

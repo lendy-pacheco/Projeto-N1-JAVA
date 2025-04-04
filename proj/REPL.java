@@ -10,6 +10,7 @@ public class REPL {
         Fila gravacao = new Fila(10); // Fila da gravação
         Scanner scanner = new Scanner(System.in); // Inicializa o Scanner
         System.out.println("Digite um comando:\n");
+        
 
         while (true) {
             
@@ -70,6 +71,9 @@ public class REPL {
                 // Agora passa para o conversor
                 String resultado = CONV.converterParaPosfixa(expressao, valores, nomes);
                 System.out.println(resultado);
+            }
+            else{
+                System.err.println("ERRO: comando inválido!!/n");
             }
         }
     }
